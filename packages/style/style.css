@@ -176,3 +176,8 @@ label {
   font-size: var(--font-body-sm);
   margin-bottom: var(--margin-sm);
 }
+
+::slotted(a:link),
+::slotted(a:visited) {
+  display: block;
+}
