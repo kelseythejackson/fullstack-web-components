@@ -177,7 +177,3 @@ label {
   margin-bottom: var(--margin-sm);
 }
 
-::slotted(a:link),
-::slotted(a:visited) {
-  display: block;
-}
