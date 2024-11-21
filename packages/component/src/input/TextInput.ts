@@ -16,6 +16,21 @@ export class TextInputComponent extends HTMLElement {
         `;
     shadowRoot.appendChild(template.content.cloneNode(true));
     this.internals = this.attachInternals();
+  };
+  checkValidity() {
+    return this.internals.checkValidity()
+  };
+  reportValidity() {
+    return this.internals.reportValidity();
+  };
+  get validity() {
+    return this.internals.validity;
+  };
+  get validationMessage() {
+    return this.internals.validationMessage;
+  };
+  setValidity(flags: ValidityStateFlags, message?: string, anchor?: HTMLElement): void {
+    this.internals.setValidity(flags, message, anchor)
   }
 }
 
