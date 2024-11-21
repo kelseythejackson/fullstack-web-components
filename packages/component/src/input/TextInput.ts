@@ -30,8 +30,8 @@ export class TextInputComponent extends HTMLElement {
     return this.internals.validationMessage;
   };
   setValidity(flags: ValidityStateFlags, message?: string, anchor?: HTMLElement): void {
-    this.internals.setValidity(flags, message, anchor)
-  }
+    this.internals.setValidity(flags, message, anchor);
+  };
 }
 
 customElements.define('in-textinput', TextInputComponent);
