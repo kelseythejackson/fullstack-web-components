@@ -1,7 +1,8 @@
 import { IElementInternals } from 'types/lib.elementInternals';
+import { Validator } from './validator';
 export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
-
+  public $validator: Validator;
   private internals: IElementInternals;
   constructor() {
     super();
@@ -16,22 +17,31 @@ export class TextInputComponent extends HTMLElement {
         `;
     shadowRoot.appendChild(template.content.cloneNode(true));
     this.internals = this.attachInternals();
-  };
+  }
   checkValidity() {
-    return this.internals.checkValidity()
-  };
+    return this.internals.checkValidity();
+  }
   reportValidity() {
     return this.internals.reportValidity();
-  };
+  }
   get validity() {
     return this.internals.validity;
-  };
+  }
   get validationMessage() {
     return this.internals.validationMessage;
-  };
-  setValidity(flags: ValidityStateFlags, message?: string, anchor?: HTMLElement): void {
+  }
+
+  get $input(): HTMLInputElement {
+    return this.shadowRoot.querySelector('input');
+  }
+
+  setValidity(
+    flags: ValidityStateFlags,
+    message?: string,
+    anchor?: HTMLElement
+  ): void {
     this.internals.setValidity(flags, message, anchor);
-  };
+  }
 }
 
 customElements.define('in-textinput', TextInputComponent);
