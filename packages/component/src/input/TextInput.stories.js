@@ -8,7 +8,7 @@ const  PrimaryTemplate = ({}) => {
     }, 0);
     return html`
         <form>
-            <in-textinput name="username"></in-textinput>
+            <in-textinput required name="username"></in-textinput>
         </form>`
 };
 

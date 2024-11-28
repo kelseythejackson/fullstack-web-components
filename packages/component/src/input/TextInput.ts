@@ -18,6 +18,20 @@ export class TextInputComponent extends HTMLElement {
     shadowRoot.appendChild(template.content.cloneNode(true));
     this.internals = this.attachInternals();
   }
+
+  static get observedAttributes() {
+    return ["required", "value"]
+  }
+  attributeChangedCallback(name, prev, next) {
+    switch (name) {
+      case "value":
+        this.value = next
+        break;
+      case "required":
+        this.required = next
+        break;
+    }
+  }
   checkValidity() {
     return this.internals.checkValidity();
   }
@@ -33,6 +47,27 @@ export class TextInputComponent extends HTMLElement {
 
   get $input(): HTMLInputElement {
     return this.shadowRoot.querySelector('input');
+  }
+
+  set value (value: string) {
+    this.$input.value = value
+  }
+
+  get value(): string {
+    return this.$input.value
+  }
+
+  set required(value: boolean | string) {
+    if (value === "true" || value === true) {
+      this.$input.setAttribute("required", "true")
+    }
+    if (value === "false" || value == false) {
+      this.$input.removeAttribute("required")
+    }
+  }
+
+  get required(): boolean {
+    return this.$input.required
   }
 
   setValidity(
