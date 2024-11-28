@@ -4,6 +4,7 @@ export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
   public $validator: Validator;
   private internals: IElementInternals;
+  private $attr = {}
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: 'open' });
@@ -23,6 +24,7 @@ export class TextInputComponent extends HTMLElement {
     return ["required", "value"]
   }
   attributeChangedCallback(name, prev, next) {
+    this.$attr[name] = next;
     switch (name) {
       case "value":
         this.value = next
@@ -30,6 +32,12 @@ export class TextInputComponent extends HTMLElement {
       case "required":
         this.required = next
         break;
+    }
+  }
+
+  connectedCallback() {
+    for (let prop in this.$attr) {
+      this.$input.setAttribute(prop, this.$attr[prop]);
     }
   }
   checkValidity() {
