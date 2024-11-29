@@ -1,5 +1,5 @@
 import { IElementInternals } from 'types/lib.elementInternals';
-import { Validator } from './validator';
+import { Validator, validate } from './validator';
 export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
   public $validator: Validator;
@@ -36,15 +36,23 @@ export class TextInputComponent extends HTMLElement {
   }
 
   connectedCallback() {
+    this.$input.onblur = ()=> {
+      this.onValidate(true);
+    }
     for (let prop in this.$attr) {
       this.$input.setAttribute(prop, this.$attr[prop]);
     }
+    this.onValidate(false);
   }
   checkValidity() {
     return this.internals.checkValidity();
   }
   reportValidity() {
     return this.internals.reportValidity();
+  }
+
+  onValidate(showError: boolean) {
+    validate(this, showError)
   }
   get validity() {
     return this.internals.validity;
