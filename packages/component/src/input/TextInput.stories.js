@@ -28,6 +28,7 @@ export const Primary = PrimaryTemplate.bind({});
 Primary.args = {
     validators,
     onValidate: (ev) =>{
+        console.log(document.querySelector(`[name="username"]`));
         if(!document.querySelector(`[name="username"]`).validity.valid) {
             console.warn("INVALID")
         } else {

@@ -36,11 +36,12 @@ export class TextInputComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    this.$input.onblur = ()=> {
-      this.onValidate(true);
-    }
+  
     for (let prop in this.$attr) {
       this.$input.setAttribute(prop, this.$attr[prop]);
+    }
+    this.$input.onblur = ()=> {
+      this.onValidate(true);
     }
     this.onValidate(false);
   }
