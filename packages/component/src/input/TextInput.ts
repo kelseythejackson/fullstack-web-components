@@ -21,7 +21,7 @@ export class TextInputComponent extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["required", "value"]
+    return ["required", "value", "disabled"]
   }
   attributeChangedCallback(name, prev, next) {
     this.$attr[name] = next;
@@ -31,6 +31,9 @@ export class TextInputComponent extends HTMLElement {
         break;
       case "required":
         this.required = next
+        break;
+      case "disabled":
+        this.disabled = next;
         break;
     }
   }
@@ -45,6 +48,10 @@ export class TextInputComponent extends HTMLElement {
     }
     this.onValidate(false);
   }
+
+  formDisabledCallback(disabled) {
+    this.disabled = disabled;
+  }
   checkValidity() {
     return this.internals.checkValidity();
   }
@@ -54,6 +61,26 @@ export class TextInputComponent extends HTMLElement {
 
   onValidate(showError: boolean) {
     validate(this, showError)
+  }
+
+  focus() {
+    this.$input.focus()
+  }
+
+  blur() {
+    this.$input.blur()
+  }
+
+  set disabled (value: boolean | string) {
+    if (value === "true" || value === true) {
+      this.$input.setAttribute("disabled", "true")
+    }
+    if (value === "false" || value === false) {
+      this.$input.removeAttribute("disabled")
+    }
+  }
+  get disabled() {
+    return this.$input.disabled;
   }
   get validity() {
     return this.internals.validity;
@@ -65,6 +92,8 @@ export class TextInputComponent extends HTMLElement {
   get $input(): HTMLInputElement {
     return this.shadowRoot.querySelector('input');
   }
+
+
 
   set value (value: string) {
     this.$input.value = value
