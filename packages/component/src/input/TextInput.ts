@@ -69,7 +69,7 @@ export class TextInputComponent extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["required", "value", "disabled"]
+    return ["name", "type", "required","minlength", "maxlength","pattern","list","placeholder","readonly", "spellcheck", "value", "disabled"]
   }
   attributeChangedCallback(name, prev, next) {
     this.$attr[name] = next;
@@ -82,6 +82,29 @@ export class TextInputComponent extends HTMLElement {
         break;
       case "disabled":
         this.disabled = next;
+        break;
+      case "type":
+        this.$input.setAttribute("type", next);
+        break;
+      case "minlength":
+        this.$input.setAttribute("minlength", next);
+        break;
+      case "maxlength":
+        this.$input.setAttribute("maxlength", next);
+        break;
+      case "pattern":
+        this.$input.setAttribute("pattern", next);
+        break;
+      case "list":
+        this.$input.setAttribute("list", next);
+        break;
+      case "placeholder":
+        this.$input.setAttribute("placeholder", next);
+        break;
+      case "readonly":
+        this.$input.setAttribute("readonly", next);
+      case "spellcheck":
+        this.$input.setAttribute("spellcheck", next);
         break;
     }
   }
@@ -117,6 +140,54 @@ export class TextInputComponent extends HTMLElement {
 
   blur() {
     this.$input.blur()
+  }
+
+  get type() {
+    return this.$input.type ?? "text";
+  }
+
+  set type(type: string) {
+    this.$input.setAttribute("type" , type);
+  }
+
+  get list() {
+    return this.$input.list;
+  }
+
+  get minLength() {
+    return this.$input.minLength;
+  }
+
+  set minLength(min: number) {
+    this.$input.minLength = min
+  }
+
+  get maxLength() {
+    return this.$input.maxLength;
+  }
+
+  set maxLength(max: number) {
+    this.$input.maxLength = max;
+  }
+
+  get readOnly () {
+    return this.$input.readOnly;
+  }
+
+  get pattern() {
+    return this.$input.pattern;
+  }
+
+  set pattern(pattern: string) {
+    this.$input.pattern = pattern;
+  }
+
+  get placeholder() {
+    return this.$input.placeholder
+  }
+
+  get spellcheck() {
+    return this.$input.spellcheck;
   }
 
   set disabled (value: boolean | string) {
