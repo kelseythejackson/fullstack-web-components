@@ -118,6 +118,9 @@ export class TextInputComponent extends HTMLElement {
       this.onValidate(true);
     }
     this.onValidate(false);
+    this.$input.onchange = () => {
+      this.onChange()
+    }
   }
 
   formDisabledCallback(disabled) {
@@ -140,6 +143,12 @@ export class TextInputComponent extends HTMLElement {
 
   blur() {
     this.$input.blur()
+  }
+
+  onChange() {
+    this.shadowRoot.querySelector(".message").innerHTML = ""
+    this.$input.classList.remove("error")
+    this.internals.setFormValue(this.value, this.value)
   }
 
   get type() {
