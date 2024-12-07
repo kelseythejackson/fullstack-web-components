@@ -29,6 +29,11 @@ const ErrorTemplate = ({}) => {
 }
 
 const FormTemplate = ({ headline, onSubmit, onValidate, onFormData}) => {
+    setTimeout(() => {
+        for(let prop in validators) {
+            document.querySelector(`[name="${prop}"]`).$validator = validators[prop]
+        }
+    }, 0);
     return html`
         <h4 slot="header">${headline}</h4>
         <form
@@ -49,6 +54,16 @@ const FormTemplate = ({ headline, onSubmit, onValidate, onFormData}) => {
                     minlength="8"
                     class="form-control"
                 ></in-textinput>
+                <label for="password">Password</label>
+                <in-textinput
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    minlength="8"
+                    pattern="(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(20 ?=.*?[#?!@$ %^&*-]).{8,}$"
+                ></in-textinput>
+                <input class="submit" type="submit" value="Submit" />
             </fieldset>
         </form>
     `
@@ -114,7 +129,31 @@ DisabledTemplate.args = {};
 export const Error = ErrorTemplate.bind({})
 ErrorTemplate.args = {}
 
-
+export const Form = FormTemplate.bind({});
+Form.args = {
+    headline: "Login",
+    onSubmit: (ev) => {
+        console.log(new FormData(ev.target));
+        ev.preventDefault();
+    },
+    onFormData: (ev) => {
+        console.log(ev);
+        for(let value of ev.formData.values()) {
+            console.log(value)
+        }
+    },
+    onValidat: (ev) => {
+        const validations = [];
+        for(let prop in validators) {
+            validations.push(document.querySelector(`[name="${prop}"]`).validity.valid)
+        }
+        if(validations.filter((val)=> val == false).length) {
+            console.warn("INVALID");
+        } else {
+            console.log("VALID")
+        }
+    }
+}
 
 export default {
     title: "Components/Inputs/TextInput",
