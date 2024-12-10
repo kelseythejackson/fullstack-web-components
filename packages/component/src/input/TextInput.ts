@@ -126,6 +126,14 @@ export class TextInputComponent extends HTMLElement {
   formDisabledCallback(disabled) {
     this.disabled = disabled;
   }
+
+  formStateRestoreCallback(state: string, mode: string) {
+    this.value = state;
+  }
+
+  formResetCallback(state: string) {
+    this.value = this.getAttribute("value") || "";
+  }
   checkValidity() {
     return this.internals.checkValidity();
   }
