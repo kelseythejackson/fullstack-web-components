@@ -1,49 +1,49 @@
 export type Validator = {
-    validations: {
-        flag: ValidityStateFlags;
-        condition: (elem: HTMLElement) => boolean;
-        message?: string;
-    }[];
+  validations: {
+    flag: ValidityStateFlags;
+    condition: (elem: HTMLElement) => boolean;
+    message?: string;
+  }[];
 };
 
 export function validate(elem: any, showError: boolean) {
-    if(!elem.$validator || !elem.$validator.validations) {
-        return;
-    }
+  if (!elem.$validator || !elem.$validator.validations) {
+    return;
+  }
 
-    const messageElem = elem.shadowRoot.querySelector(".message")
+  const messageElem = elem.shadowRoot.querySelector('.message');
 
-    if(messageElem) {
-        messageElem.innerHTML = ""
-    }
+  if (messageElem) {
+    messageElem.innerHTML = '';
+  }
 
-    const activeValidators = [];
-    elem.$validator.validations.forEach((validator)=> {
-        if(validator.condition(elem)) {
-            elem.setValidity(validator.flag, validator.message);
-            activeValidators.push(validator)
-            if(showError) {
-                if(elem.$input) {
-                    elem.$input.classList.add("error");
-                }
-                if (messageElem) {
-                    const div = document.createElement("div")
-                    div.innerHTML = validator.message;
-                    messageElem.appendChild(div)
-                }
-            }
-        }
-    });
-
-    if(!activeValidators.length) {
-        elem.setValidity({})
+  const activeValidators = [];
+  elem.$validator.validations.forEach((validator) => {
+    if (validator.condition(elem)) {
+      elem.setValidity(validator.flag, validator.message);
+      activeValidators.push(validator);
+      if (showError) {
         if (elem.$input) {
-            elem.$input.classList.remove("error")
+          elem.$input.classList.add('error');
         }
-        if(messageElem) {
-            messageElem.innerHTML = ""
+        if (messageElem) {
+          const div = document.createElement('div');
+          div.innerHTML = validator.message;
+          messageElem.appendChild(div);
         }
+      }
     }
+  });
 
-    elem.dispatchEvent(new CustomEvent("validate", {bubbles: true}));
+  if (!activeValidators.length) {
+    elem.setValidity({});
+    if (elem.$input) {
+      elem.$input.classList.remove('error');
+    }
+    if (messageElem) {
+      messageElem.innerHTML = '';
+    }
+  }
+
+  elem.dispatchEvent(new CustomEvent('validate', { bubbles: true }));
 }
