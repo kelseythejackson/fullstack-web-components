@@ -34,3 +34,13 @@ Icon.args = {
   variant: 'icon icon-close',
   label: svg,
 };
+
+const DisabledTemplate = ({ label, variant }) => html`
+  <button class="${variant}" is="in-button" disabled>${label}</button>
+`;
+
+export const Disabled = DisabledTemplate.bind({});
+Disabled.args = {
+  variant: 'primary',
+  label: 'Submit',
+};

@@ -74,6 +74,43 @@ const buttonStyles = `
     .icon.icon-close svg {
       transform: rotateZ(45deg);
     }
+
+    .in-button.primary:focus,
+    .in-button.secondary:focus,
+    .in-button.icon:focus {
+      background: var(--color-white);
+      color: var(--color-black);
+      border: 2px solid var(--color-black);
+      outline: none;
+    }
+    .in-button.primary:active,
+    .in-button.secondary:active,
+    .in-button.icon:active {
+      background: var(--color-white);
+      border: 2px solid var(--color-neutral-500);
+      outline: none;
+    }
+
+    .in-button.primary[disabled],
+    .in-button.secondary[disabled],
+    .in-button.icon[disabled] {
+      opacity: var(--color-disable);
+      background: var(--color-disable);
+      border: var(--border-disable);
+      color: var(--color-neutral-500);
+      cursor: default;
+    }
+
+    .in-button.primary[disabled]:focus,
+    .in-button.secondary[disabled]:focus,
+    .in-button.icon[disabled]:focus,
+    .in-button.primary[disabled]:active,
+    .in-button.secondary[disabled]:active,
+    .in-button.icon[disabled]:active {
+      border: var(--border-disable);
+      outline: none;
+      box-shadow: none;
+    }
   `;
 
 customElements.define('in-button', ButtonComponent, { extends: 'button' });
