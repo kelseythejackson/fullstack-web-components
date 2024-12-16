@@ -3,7 +3,7 @@ describe('TextInputComponent', () => {
     cy.visit('iframe.html?id=components-inputs-textinput--form');
     cy.get('#root').get('[id="username"]').should('be.visible').click();
     cy.get('#root').get('[id="password"]').should('be.visible').click();
-    cy.get('#root').get('.submit').should('be.visible').click();
+    cy.get('#root').get('.primary').should('be.visible').click();
     cy.get('#root')
       .get('[id="username"]')
       .shadow()
@@ -29,7 +29,7 @@ describe('TextInputComponent', () => {
       .shadow()
       .find('input')
       .type('W3BC0mpon3nts!');
-    cy.get('#root').get('.submit').should('be.visible').click();
+    cy.get('#root').get('.primary').should('be.visible').click();
     cy.get('#root')
       .get('[id="username"]')
       .shadow()

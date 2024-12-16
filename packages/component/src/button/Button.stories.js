@@ -2,13 +2,14 @@ import { ButtonComponent } from './Button';
 import { html } from 'lit-html';
 
 let icon = null;
+let svg;
 
 if (window.FontAwesome) {
   icon = window.FontAwesome.icon({ prefix: 'fas', iconName: 'plus' });
+  svg = icon.node[0];
+  svg.setAttribute('aria-hidden', 'true');
 }
 
-const svg = icon.node[0];
-svg.setAttribute('aria-hidden', 'true');
 export default {
   title: 'Components/Inputs/Button',
   component: 'in-button',
