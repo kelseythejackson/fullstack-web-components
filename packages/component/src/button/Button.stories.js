@@ -8,6 +8,7 @@ if (window.FontAwesome) {
 }
 
 const svg = icon.node[0];
+svg.setAttribute('aria-hidden', 'true');
 export default {
   title: 'Components/Inputs/Button',
   component: 'in-button',
@@ -29,10 +30,19 @@ Secondary.args = {
   label: 'Button',
 };
 
-export const Icon = Template.bind({});
+const IconTemplate = ({ label, variant, svg }) =>
+  html` <button
+    class="${variant}"
+    aria-labelledby="close-button-label"
+    is="in-button"
+  >
+    <span id="close-button-label" hidden>${label}</span>${svg}
+  </button>`;
+export const Icon = IconTemplate.bind({});
 Icon.args = {
   variant: 'icon icon-close',
-  label: svg,
+  label: 'Close',
+  svg: svg,
 };
 
 const DisabledTemplate = ({ label, variant }) => html`

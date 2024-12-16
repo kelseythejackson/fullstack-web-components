@@ -24,6 +24,7 @@ export function validate(elem: any, showError: boolean) {
       activeValidators.push(validator);
       if (showError) {
         if (elem.$input) {
+          elem.$input.setAttribute('aria-invalid', 'true');
           elem.$input.classList.add('error');
         }
         if (messageElem) {
