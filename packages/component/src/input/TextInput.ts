@@ -1,18 +1,11 @@
 import { IElementInternals } from 'types/lib.elementInternals';
 import { Validator, validate } from './validator';
-export class TextInputComponent extends HTMLElement {
-  static formAssociated = true;
-  public $validator: Validator;
-  private internals: IElementInternals;
-  private $attr = {};
-  constructor() {
-    super();
-    const shadowRoot = this.attachShadow({ mode: 'open' });
-    const template = document.createElement('template');
+import { Component, attachShadow } from '@in/common';
 
-    template.innerHTML = `
-      <style>
-        :host {
+@Component({
+  selector: 'in-textinput',
+  style: `
+  :host {
           display: block;
           font-family: var(--font-default);
           font-size: var(--font-body-sm);
@@ -57,14 +50,25 @@ export class TextInputComponent extends HTMLElement {
           margin-top: var(--margin-xxs);
           color: var(--color-error);
           font-weight: var(--font-weight-default);
-        }
-      </style>
-            <div class="control">
-                <input type="text" aria-describedby="message" />
-            </div>
-            <div class="message" aria-role="alert" aria-live="assertive" id="message"></div>
-        `;
-    shadowRoot.appendChild(template.content.cloneNode(true));
+        }`,
+  template: ` <div class="control">
+      <input type="text" aria-describedby="message" />
+    </div>
+    <div
+      class="message"
+      aria-role="alert"
+      aria-live="assertive"
+      id="message"
+    ></div>`,
+})
+export class TextInputComponent extends HTMLElement {
+  static formAssociated = true;
+  public $validator: Validator;
+  private internals: IElementInternals;
+  private $attr = {};
+  constructor() {
+    super();
+    attachShadow(this);
     this.internals = this.attachInternals();
   }
 
@@ -274,5 +278,3 @@ export class TextInputComponent extends HTMLElement {
     this.internals.setValidity(flags, message, anchor);
   }
 }
-
-customElements.define('in-textinput', TextInputComponent);

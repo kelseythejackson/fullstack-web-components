@@ -1,13 +1,8 @@
-export class CardComponent extends HTMLElement {
-  constructor() {
-    super();
-
-    const shadowRoot = this.attachShadow({ mode: 'open' });
-
-    const template = document.createElement('template');
-    template.innerHTML = `
-    <style>
-      :host{
+import { Component, attachShadow } from '@in/common';
+@Component({
+  selector: 'in-card',
+  style: `
+  :host{
         display: block;
         background: var(--color-white);
         border-radius: var(--radius-md);
@@ -31,19 +26,22 @@ export class CardComponent extends HTMLElement {
         padding-left: 0px;
         padding-right: 0px;
       }
-    </style>
-      <header>
-        <slot name="header"></slot>
-      </header>
-      <section>
-        <slot name="content"></slot>
-      </section>
-      <footer>
-        <slot name="footer"></slot>
-      </footer>
-    `;
-    shadowRoot.appendChild(template.content.cloneNode(true));
+  `,
+  template: `
+    <header>
+      <slot name="header"></slot>
+    </header>
+    <section>
+      <slot name="content"></slot>
+    </section>
+    <footer>
+      <slot name="footer"></slot>
+    </footer>
+  `,
+})
+export class CardComponent extends HTMLElement {
+  constructor() {
+    super();
+    attachShadow(this);
   }
 }
-
-customElements.define('in-card', CardComponent);
