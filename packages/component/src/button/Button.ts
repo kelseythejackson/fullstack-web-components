@@ -1,24 +1,4 @@
-export class ButtonComponent extends HTMLButtonElement {
-  constructor() {
-    super();
-  }
-
-  connectedCallback() {
-    this.classList.add('in-button');
-    this.addStylesheet();
-  }
-
-  addStylesheet() {
-    const head = document.head;
-    if (document.getElementById(`in-button-style`)) {
-      return;
-    }
-    const style = document.createElement('style');
-    style.setAttribute('id', `in-button-style`);
-    style.textContent = buttonStyles;
-    head.appendChild(style);
-  }
-}
+import { attachStyle, Component } from '@in/common';
 
 const buttonStyles = `
     .in-button.primary {
@@ -112,5 +92,18 @@ const buttonStyles = `
       box-shadow: none;
     }
   `;
+@Component({
+  custom: { extends: 'button' },
+  selector: 'in-button',
+  style: buttonStyles,
+})
+export class ButtonComponent extends HTMLButtonElement {
+  constructor() {
+    super();
+  }
 
-customElements.define('in-button', ButtonComponent, { extends: 'button' });
+  connectedCallback() {
+    this.classList.add('in-button');
+    attachStyle(this);
+  }
+}

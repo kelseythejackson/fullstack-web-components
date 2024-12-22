@@ -10,7 +10,7 @@ function closestRoot(base: Element): any {
 export function attachStyle(context: any): void {
   const id = `${context.elementMeta.selector}`;
   const closest = closestRoot(context);
-  if (closest.tagName === 'HEAD' && closest.getElementById(`${id}-in-style`)) {
+  if (closest.tagName === 'HEAD' && document.getElementById(`${id}-in-style`)) {
     return;
   }
   if (closest.getElementById && closest.getElementById(`${id}-in-style`)) {
