@@ -1,6 +1,6 @@
 import { IElementInternals } from 'types/lib.elementInternals';
 import { Validator, validate } from './validator';
-import { Component, attachShadow, html, css } from '@in/common';
+import { Component, attachShadow, html, css, Listen } from '@in/common';
 
 @Component({
   selector: 'in-textinput',
@@ -131,16 +131,8 @@ export class TextInputComponent extends HTMLElement {
     for (let prop in this.$attr) {
       this.$input.setAttribute(prop, this.$attr[prop]);
     }
-    this.$input.onblur = () => {
-      this.onValidate(true);
-    };
-    this.$input.onkeyup = () => {
-      this.onChange();
-    };
-    this.onValidate(false);
-    this.$input.onchange = () => {
-      this.onChange();
-    };
+
+    validate(this, false);
   }
 
   formDisabledCallback(disabled) {
@@ -160,9 +152,9 @@ export class TextInputComponent extends HTMLElement {
   reportValidity() {
     return this.internals.reportValidity();
   }
-
-  onValidate(showError: boolean) {
-    validate(this, showError);
+  @Listen('blur', 'input')
+  onValidate() {
+    validate(this, true);
   }
 
   focus() {
@@ -172,7 +164,8 @@ export class TextInputComponent extends HTMLElement {
   blur() {
     this.$input.blur();
   }
-
+  @Listen('change', 'input')
+  @Listen('keyup', 'input')
   onChange() {
     this.shadowRoot.querySelector('.message').innerHTML = '';
     this.$input.classList.remove('error');
