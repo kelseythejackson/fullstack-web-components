@@ -27,7 +27,7 @@ export function Listen(
       getContext(this).addEventListener(eventName, handler);
     }
     function removeListener() {
-      getContext(this).removeListener(eventName, this[symbolMethod]);
+      getContext(this).removeEventListener(eventName, this[symbolMethod]);
     }
     target.connectedCallback = function connectedCallbackWrapper() {
       connectedCallback.call(this);
