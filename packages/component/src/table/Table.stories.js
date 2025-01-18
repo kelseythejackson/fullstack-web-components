@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import { TableCardComponent } from './TableCard';
 import { TableComponent, ColumnData } from './Table';
+import { CardComponent } from './../card/Card';
 
 const columnData = [
   {
@@ -87,6 +88,14 @@ export default {
 };
 
 const Template = ({ channelName, context }) => {
+  const channel = new BroadcastChannel(channelName);
+  setTimeout(() => {
+    channel.postMessage({
+      type: 'data',
+      detail: context,
+    });
+  }, 0);
+
   return html`<in-tablecard channel="${channelName}"></in-tablecard>`;
 };
 
