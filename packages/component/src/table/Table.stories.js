@@ -2,6 +2,8 @@ import { html } from 'lit-html';
 import { TableCardComponent } from './TableCard';
 import { TableComponent, ColumnData } from './Table';
 import { CardComponent } from './../card/Card';
+import { TrComponent } from './Tr';
+import { TextInputComponent } from '../input/TextInput';
 
 const columnData = [
   {

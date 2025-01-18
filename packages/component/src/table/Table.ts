@@ -113,12 +113,14 @@ export class TableComponent extends HTMLTableElement {
   renderRows(rows: any[]) {
     this.$body.innerHTML = '';
     rows.forEach((rowData) => {
-      const tr = document.createElement('tr');
+      const tr = document.createElement('tr', { is: 'in-tr' });
       this.columnData.forEach((colData) => {
-        const td = document.createElement('td');
+        const td = document.createElement('td', { is: 'in-td' });
         if (colData.align) {
           td.align = colData.align;
         }
+        td.setAttribute('value', rowData[colData.property]);
+        td.setAttribute('readonly', 'true');
         td.innerText = rowData[colData.property];
         tr.appendChild(td);
       });
