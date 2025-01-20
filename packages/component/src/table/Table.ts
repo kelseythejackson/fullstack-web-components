@@ -1,4 +1,6 @@
 import { Component, attachTemplate, attachStyle, html, css } from '@in/common';
+import { TrComponent } from './Tr';
+import { TdComponent } from './Td';
 export interface Column {
   property: string;
   label: string;
@@ -47,6 +49,8 @@ export type ColumnData = Column[];
 export class TableComponent extends HTMLTableElement {
   private channel: BroadcastChannel;
   private columnData: ColumnData;
+  private savedState: any[];
+  private editIndex: number = 0;
   constructor() {
     super();
     attachTemplate(this);
@@ -83,8 +87,25 @@ export class TableComponent extends HTMLTableElement {
     }
   }
 
-  onEdit() {}
-  onReadOnly() {}
+  onEdit() {
+    const cells = this.querySelectorAll('td');
+    if (!this.savedState) {
+      this.savedState = JSON.parse(JSON.stringify(this.state));
+    }
+    cells.forEach(this.handleCellListeners.bind(this));
+    this.onNext();
+  }
+  onReadOnly() {
+    const cells = this.querySelectorAll('td');
+    cells.forEach((td) => {
+      td.setAttribute('readonly', 'true');
+    });
+    if (this.savedState) {
+      this.renderRows(this.savedState);
+      this.savedState = undefined;
+    }
+    this.editIndex = 0;
+  }
   onSave() {}
 
   onTableData(next) {
@@ -92,6 +113,24 @@ export class TableComponent extends HTMLTableElement {
     this.renderRows(next.rowData);
   }
 
+  get state() {
+    return Array.from(this.querySelector('tbody').querySelectorAll('tr')).map(
+      (tr: TrComponent) => tr.$rowData
+    );
+  }
+
+  onNext() {
+    const cells = this.querySelectorAll('td');
+    if (!cells[this.editIndex]) {
+      return;
+    }
+    const input = cells[this.editIndex].querySelector(
+      'in-textinput'
+    ) as HTMLInputElement;
+    if (input) {
+      input.focus();
+    }
+  }
   renderHeader(cols: ColumnData) {
     this.columnData = cols.sort((a, b) => a.index - b.index);
     const tr = document.createElement('tr');
@@ -121,11 +160,48 @@ export class TableComponent extends HTMLTableElement {
         }
         td.setAttribute('value', rowData[colData.property]);
         td.setAttribute('readonly', 'true');
+        td.setAttribute('data-property', colData.property);
         td.innerText = rowData[colData.property];
         tr.appendChild(td);
       });
       this.$body.append(tr);
+      tr.dispatchEvent(
+        new CustomEvent('data', {
+          detail: rowData,
+        })
+      );
     });
+  }
+
+  handleCellListeners(td: TdComponent, index: number) {
+    const tr = td.parentNode as TrComponent;
+    const input = td.querySelector('in-textinput') as HTMLInputElement;
+    if (input) {
+      input.value = td.getAttribute('value');
+      td.setAttribute('readonly', 'false');
+      input.onclick = (ev) => {
+        const cells = this.querySelectorAll('td');
+        this.editIndex = Array.from(cells).indexOf(td);
+      };
+      input.onkeyup = (ev) => {
+        td.setAttribute('value', input.value);
+        tr.dispatchEvent(
+          new CustomEvent('patch', {
+            detail: {
+              property: td.getAttribute('data-property'),
+              changes: td.getAttribute('value'),
+            },
+          })
+        );
+      };
+      input.onkeydown = (ev) => {
+        ev.stopPropagation();
+        if (ev.key === 'Tab') {
+          this.editIndex = index;
+          this.onNext();
+        }
+      };
+    }
   }
 
   get $head() {
