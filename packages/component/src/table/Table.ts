@@ -1,6 +1,7 @@
 import { Component, attachTemplate, attachStyle, html, css } from '@in/common';
-import { TrComponent } from './Tr';
 import { TdComponent } from './Td';
+import { TrComponent } from './Tr';
+
 export interface Column {
   property: string;
   label: string;
@@ -73,11 +74,9 @@ export class TableComponent extends HTMLTableElement {
     attachTemplate(this);
     attachStyle(this);
   }
-
   static get observedAttributes() {
     return ['channel'];
   }
-
   attributeChangedCallback(name, prev, next) {
     switch (name) {
       case 'channel':
@@ -86,7 +85,6 @@ export class TableComponent extends HTMLTableElement {
         break;
     }
   }
-
   onMessage(ev) {
     switch (ev.data.type) {
       case 'add':
@@ -106,12 +104,10 @@ export class TableComponent extends HTMLTableElement {
         break;
     }
   }
-
   onAdd() {
     if (!this.savedState) {
       this.savedState = JSON.parse(JSON.stringify(this.state));
     }
-
     const rowData = this.blankRowData;
 
     const tr = document.createElement('tr', { is: 'in-tr' });
@@ -126,20 +122,26 @@ export class TableComponent extends HTMLTableElement {
       tr.appendChild(td);
     });
 
+    this.createDeleteButton(tr);
+
     this.$body.appendChild(tr);
+
     tr.dispatchEvent(
       new CustomEvent('data', {
         detail: rowData,
       })
     );
+
     const cells = this.querySelectorAll('td');
+
     cells.forEach(this.handleCellListeners.bind(this));
+
     this.editIndex = Array.from(cells).indexOf(
-      tr.children[0] as HTMLTableCellElement
+      tr.children[0] as HTMLTableDataCellElement
     );
+
     this.onNext();
   }
-
   onEdit() {
     const cells = this.querySelectorAll('td');
     if (!this.savedState) {
@@ -172,25 +174,82 @@ export class TableComponent extends HTMLTableElement {
     this.savedState = undefined;
     this.editIndex = 0;
 
+    const validRows = this.validateRows(data);
+
     this.channel.postMessage({
       type: 'change',
-      detail: data,
+      detail: validRows,
     });
 
-    this.renderRows(data);
+    this.renderRows(validRows);
   }
-
   onTableData(next) {
     this.renderHeader(next.columnData);
     this.renderRows(next.rowData);
   }
-
-  get state() {
-    return Array.from(this.querySelector('tbody').querySelectorAll('tr')).map(
-      (tr: TrComponent) => tr.$rowData
+  createDeleteButton(tr) {
+    const deleteButtonTd = document.createElement('td');
+    deleteButtonTd.classList.add('delete-cell');
+    deleteButtonTd.setAttribute('readonly', 'true');
+    const deleteButtonTemplate: HTMLTemplateElement = document.querySelector(
+      '[data-template-id="button-delete"]'
     );
+    deleteButtonTd.appendChild(deleteButtonTemplate.content.cloneNode(true));
+    tr.appendChild(deleteButtonTd);
   }
+  handleCellListeners(td: TdComponent, index: number) {
+    const tr = td.parentNode as TrComponent;
+    const input = td.querySelector('in-textinput') as HTMLInputElement;
+    const button = td.querySelector('[is="in-button"]') as HTMLButtonElement;
+    if (input) {
+      input.value = td.getAttribute('value');
+      td.setAttribute('readonly', 'false');
 
+      input.onclick = (ev) => {
+        const cells = this.querySelectorAll('td');
+        this.editIndex = Array.from(cells).indexOf(td);
+      };
+
+      input.onkeyup = (ev) => {
+        td.setAttribute('value', input.value);
+        tr.dispatchEvent(
+          new CustomEvent('patch', {
+            detail: {
+              property: td.getAttribute('data-property'),
+              changes: td.getAttribute('value'),
+            },
+          })
+        );
+      };
+
+      input.onkeydown = (ev) => {
+        ev.stopPropagation();
+        if (ev.key === 'Tab') {
+          this.editIndex = index;
+          this.onNext();
+        }
+      };
+    }
+    if (button) {
+      td.setAttribute('readonly', 'false');
+      button.onclick = () => {
+        this.editIndex = index;
+        td.parentNode.dispatchEvent(new CustomEvent('delete'));
+      };
+      button.onkeydown = (ev) => {
+        ev.stopPropagation();
+        if (ev.key === 'Tab') {
+          this.editIndex = index;
+          this.onNext();
+        }
+        if (ev.key === 'Enter' || ev.key === 'Select') {
+          this.editIndex = index;
+          this.onNext();
+          td.parentNode.dispatchEvent(new CustomEvent('delete'));
+        }
+      };
+    }
+  }
   onNext() {
     const cells = this.querySelectorAll('td');
     if (!cells[this.editIndex]) {
@@ -206,6 +265,7 @@ export class TableComponent extends HTMLTableElement {
   renderHeader(cols: ColumnData) {
     this.columnData = cols.sort((a, b) => a.index - b.index);
     const tr = document.createElement('tr');
+
     cols.forEach((colData) => {
       const th = document.createElement('th');
       th.innerText = colData.label;
@@ -217,10 +277,10 @@ export class TableComponent extends HTMLTableElement {
       }
       tr.appendChild(th);
     });
+
     this.$head.innerHTML = '';
     this.$head.appendChild(tr);
   }
-
   renderRows(rows: any[]) {
     this.$body.innerHTML = '';
     rows.forEach((rowData) => {
@@ -230,61 +290,43 @@ export class TableComponent extends HTMLTableElement {
         if (colData.align) {
           td.align = colData.align;
         }
+        td.setAttribute('data-property', colData.property);
         td.setAttribute('value', rowData[colData.property]);
         td.setAttribute('readonly', 'true');
-        td.setAttribute('data-property', colData.property);
-        td.innerText = rowData[colData.property];
         tr.appendChild(td);
       });
-      this.$body.append(tr);
+      this.createDeleteButton(tr);
+      this.$body.appendChild(tr);
       tr.dispatchEvent(
         new CustomEvent('data', {
           detail: rowData,
         })
       );
-
       this.blankRowData = {};
       this.columnData.forEach((colData) => {
         this.blankRowData[colData.property] = '';
       });
     });
   }
-
-  handleCellListeners(td: TdComponent, index: number) {
-    const tr = td.parentNode as TrComponent;
-    const input = td.querySelector('in-textinput') as HTMLInputElement;
-    if (input) {
-      input.value = td.getAttribute('value');
-      td.setAttribute('readonly', 'false');
-      input.onclick = (ev) => {
-        const cells = this.querySelectorAll('td');
-        this.editIndex = Array.from(cells).indexOf(td);
-      };
-      input.onkeyup = (ev) => {
-        td.setAttribute('value', input.value);
-        tr.dispatchEvent(
-          new CustomEvent('patch', {
-            detail: {
-              property: td.getAttribute('data-property'),
-              changes: td.getAttribute('value'),
-            },
-          })
-        );
-      };
-      input.onkeydown = (ev) => {
-        ev.stopPropagation();
-        if (ev.key === 'Tab') {
-          this.editIndex = index;
-          this.onNext();
+  validateRows(data) {
+    return data.filter((rowData) => {
+      let hasData: boolean = false;
+      for (let key in rowData) {
+        if (rowData[key].length > 0) {
+          hasData = true;
         }
-      };
-    }
+      }
+      return hasData;
+    });
   }
-
+  get state() {
+    return Array.from(this.querySelector('tbody').querySelectorAll('tr')).map(
+      (tr: TrComponent) => tr.$rowData
+    );
+  }
   get $head() {
     return this.querySelector('thead');
   }
-
   get $body() {
     return this.querySelector('tbody');
   }

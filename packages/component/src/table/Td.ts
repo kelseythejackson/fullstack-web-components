@@ -29,12 +29,12 @@ export class TdComponent extends HTMLTableCellElement {
     attachTemplate(this);
   }
 
-  static get observedAttributes() {
-    return ['value', 'readonly'];
-  }
-
   connectedCallback() {
     attachStyle(this);
+  }
+
+  static get observedAttributes() {
+    return ['value', 'readonly'];
   }
 
   attributeChangedCallback(name, prev, next) {
@@ -48,6 +48,10 @@ export class TdComponent extends HTMLTableCellElement {
     }
   }
 
+  setValue(value: string) {
+    this.$readOnly.innerText = value;
+  }
+
   setMode(readOnly: boolean) {
     if (readOnly) {
       this.$readOnly.removeAttribute('hidden');
@@ -57,18 +61,16 @@ export class TdComponent extends HTMLTableCellElement {
       this.$inputContainer.removeAttribute('hidden');
     }
   }
-  setValue(value: string) {
-    this.$readOnly.innerText = value;
-  }
 
   get $readOnly(): HTMLSpanElement {
     return this.querySelector('.td-readonly');
   }
+
   get $input(): HTMLInputElement {
     return this.querySelector('in-textinput');
   }
 
   get $inputContainer(): HTMLSpanElement {
-    return this.querySelector('td-input');
+    return this.querySelector('.td-input');
   }
 }

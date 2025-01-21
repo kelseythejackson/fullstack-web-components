@@ -1,9 +1,13 @@
 import { html } from 'lit-html';
-import { TableCardComponent } from './TableCard';
-import { TableComponent, ColumnData } from './Table';
-import { CardComponent } from './../card/Card';
-import { TrComponent } from './Tr';
+import {
+  TableCardComponent,
+  TableComponent,
+  ColumnData,
+  TdComponent,
+  TrComponent,
+} from './';
 import { TextInputComponent } from '../input/TextInput';
+import { CardComponent } from './../card/Card';
 
 const columnData = [
   {
@@ -96,8 +100,7 @@ const Template = ({ channelName, context }) => {
       type: 'data',
       detail: context,
     });
-  }, 0);
-
+  });
   return html`<in-tablecard channel="${channelName}"></in-tablecard>`;
 };
 

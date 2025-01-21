@@ -18,5 +18,11 @@ export class TrComponent extends HTMLTableRowElement {
   @Listen('patch')
   patchData(ev: CustomEvent) {
     this.$rowData[ev.detail.property] = ev.detail.changes;
+    console.log(this, this.$rowData);
+  }
+
+  @Listen('delete')
+  delete() {
+    this.parentNode.removeChild(this);
   }
 }
