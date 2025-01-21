@@ -2,7 +2,23 @@ import { Component, attachShadow, html, css, Listen } from '@in/common';
 
 @Component({
   selector: 'in-tablecard',
-  style: css``,
+  style: css`
+    :host .primary[is='in-button'],
+    :host .secondary[is='in-button'] {
+      min-width: 160px;
+      margin-left: var(--margin-lg);
+    }
+
+    .table-footer {
+      display: flex;
+      justify-content: space-between;
+      padding-top: var(--padding-md);
+    }
+
+    [hidden] {
+      display: none;
+    }
+  `,
   template: html`
     <in-card>
       <table is="in-table" slot="content"></table>

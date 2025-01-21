@@ -40,6 +40,22 @@ export type ColumnData = Column[];
       padding-left: var(--padding-xxs);
       padding-right: var(--padding-xxs);
     }
+    [is='in-table'] td.delete-cell button {
+      transform: translateY(-2px);
+    }
+    [is='in-table'] td.delete-cell[readonly='true'] {
+      display: none;
+    }
+    [is='in-table'] td:first-child {
+      padding-left: var(--padding-lg);
+    }
+    [is='in-table'] th:first-child {
+      padding-left: calc(var(--padding-lg) + var(--padding-sm));
+    }
+    [is='in-table'] th:last-child,
+    [is='in-table'] td:last-child {
+      padding-right: var(--padding-lg);
+    }
   `,
   template: html`
     <thead></thead>
@@ -106,7 +122,26 @@ export class TableComponent extends HTMLTableElement {
     }
     this.editIndex = 0;
   }
-  onSave() {}
+  onSave() {
+    const data: TrComponent[] = this.state;
+
+    if (this.querySelectorAll('td')[this.editIndex]) {
+      this.querySelectorAll('td')[this.editIndex].setAttribute(
+        'readonly',
+        'true'
+      );
+    }
+
+    this.savedState = undefined;
+    this.editIndex = 0;
+
+    this.channel.postMessage({
+      type: 'change',
+      detail: data,
+    });
+
+    this.renderRows(data);
+  }
 
   onTableData(next) {
     this.renderHeader(next.columnData);

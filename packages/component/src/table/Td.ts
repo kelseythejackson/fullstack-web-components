@@ -27,11 +27,14 @@ export class TdComponent extends HTMLTableCellElement {
   constructor() {
     super();
     attachTemplate(this);
-    attachStyle(this);
   }
 
   static get observedAttributes() {
     return ['value', 'readonly'];
+  }
+
+  connectedCallback() {
+    attachStyle(this);
   }
 
   attributeChangedCallback(name, prev, next) {
