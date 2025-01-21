@@ -16,23 +16,28 @@ export function Listen(
     const { connectedCallback = () => {}, disconnectedCallback = () => {} } =
       target;
     const symbolMethod = Symbol(key);
+
     function getContext(context) {
       const root = context.shadowRoot ? context.shadowRoot : context;
       return selector ? root.querySelector(selector) : context;
     }
+
     function addListener() {
       const handler = (this[symbolMethod] = (...args) => {
         descriptor.value.apply(this, args);
       });
       getContext(this).addEventListener(eventName, handler);
     }
+
     function removeListener() {
       getContext(this).removeEventListener(eventName, this[symbolMethod]);
     }
+
     target.connectedCallback = function connectedCallbackWrapper() {
       connectedCallback.call(this);
       addListener.call(this);
     };
+
     target.disconnectedCallback = function disconnectedCallbackWrapper() {
       disconnectedCallback.call(this);
       removeListener.call(this);

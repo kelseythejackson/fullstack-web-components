@@ -67,6 +67,7 @@ export class TableComponent extends HTMLTableElement {
   private columnData: ColumnData;
   private savedState: any[];
   private editIndex: number = 0;
+  private blankRowData: any;
   constructor() {
     super();
     attachTemplate(this);
@@ -88,6 +89,9 @@ export class TableComponent extends HTMLTableElement {
 
   onMessage(ev) {
     switch (ev.data.type) {
+      case 'add':
+        this.onAdd();
+        break;
       case 'data':
         this.onTableData(ev.data.detail);
         break;
@@ -101,6 +105,39 @@ export class TableComponent extends HTMLTableElement {
         this.onSave();
         break;
     }
+  }
+
+  onAdd() {
+    if (!this.savedState) {
+      this.savedState = JSON.parse(JSON.stringify(this.state));
+    }
+
+    const rowData = this.blankRowData;
+
+    const tr = document.createElement('tr', { is: 'in-tr' });
+    this.columnData.forEach((colData) => {
+      const td = document.createElement('td', { is: 'in-td' });
+      if (colData.align) {
+        td.align = colData.align;
+      }
+      td.setAttribute('data-property', colData.property);
+      td.setAttribute('readonly', 'false');
+      td.setAttribute('value', rowData[colData.property]);
+      tr.appendChild(td);
+    });
+
+    this.$body.appendChild(tr);
+    tr.dispatchEvent(
+      new CustomEvent('data', {
+        detail: rowData,
+      })
+    );
+    const cells = this.querySelectorAll('td');
+    cells.forEach(this.handleCellListeners.bind(this));
+    this.editIndex = Array.from(cells).indexOf(
+      tr.children[0] as HTMLTableCellElement
+    );
+    this.onNext();
   }
 
   onEdit() {
@@ -205,6 +242,11 @@ export class TableComponent extends HTMLTableElement {
           detail: rowData,
         })
       );
+
+      this.blankRowData = {};
+      this.columnData.forEach((colData) => {
+        this.blankRowData[colData.property] = '';
+      });
     });
   }
 
