@@ -69,5 +69,17 @@ export class DialogComponent extends HTMLElement {
     const template = document.querySelector(
       this.$templateSelector
     ) as HTMLTemplateElement;
+    if (!template) {
+      console.error(
+        `DialogComponent cannot find Element with selector ${this.$templateSelector}`
+      );
+      return;
+    }
+    this.$container = document.createElement(`in-${this.$variant}`);
+    const clone = template.content.cloneNode(true) as HTMLElement;
+    this.$container.classList.add(this.$variant);
+    this.$container.appendChild(clone);
+    document.body.appendChild(this.$container);
+    this.$state = 'open';
   }
 }

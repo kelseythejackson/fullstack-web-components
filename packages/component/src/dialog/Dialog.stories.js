@@ -1,6 +1,8 @@
 import { html } from 'lit-html';
 import { ButtonComponent } from './../button/Button';
 import { DialogComponent } from './Dialog';
+import { ModalComponent } from './Modal';
+import { TooltipComponent } from './Tooltip';
 
 export default {
   title: 'Components/Dialog',
@@ -30,5 +32,5 @@ Primary.args = {
   targetId: 'dialog-hello-target',
   targetSelector: '[data-dialog-id="dialog-hello-target"]',
   templateSelector: '[data-template-id="dialog-hello"]',
-  varian: 'modal',
+  variant: 'modal',
 };
