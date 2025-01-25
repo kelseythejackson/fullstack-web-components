@@ -1,4 +1,4 @@
-import { Component, attachShadow, html, css } from '@in/common';
+import { Component, attachShadow, css, html } from '@in/common';
 
 @Component({
   selector: 'in-modal',
@@ -12,13 +12,12 @@ import { Component, attachShadow, html, css } from '@in/common';
       width: 50vw;
       z-index: 9000;
     }
-
     ::slotted(*) {
       position: absolute;
       width: 100%;
       height: auto;
+      box-sizing: border-box;
     }
-
     ::slotted(in-card) {
       box-shadow: var(--shadow-modal);
     }

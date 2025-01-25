@@ -1,6 +1,5 @@
 import { html } from 'lit-html';
 import { DialogComponent } from './Dialog';
-import { ButtonComponent } from './../button/Button';
 import { ModalComponent } from './Modal';
 import { TooltipComponent } from './Tooltip';
 import { DialogStack } from './DialogStack';

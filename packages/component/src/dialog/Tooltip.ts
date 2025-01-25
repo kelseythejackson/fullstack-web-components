@@ -1,4 +1,4 @@
-import { Component, attachShadow, html, css, Listen } from '@in/common';
+import { Component, attachShadow, Listen, css, html } from '@in/common';
 
 @Component({
   selector: 'in-tooltip',
@@ -10,13 +10,11 @@ import { Component, attachShadow, html, css, Listen } from '@in/common';
       max-width: 300px;
       z-index: 9000;
     }
-
     ::slotted(*) {
       position: absolute;
       width: 100%;
       height: auto;
     }
-
     ::slotted(in-card) {
       box-shadow: var(--shadow-tooltip);
     }
@@ -26,9 +24,10 @@ import { Component, attachShadow, html, css, Listen } from '@in/common';
 export class TooltipComponent extends HTMLElement {
   constructor() {
     super();
-    attachShadow(this, { mode: 'open' });
+    attachShadow(this, {
+      mode: 'open',
+    });
   }
-
   @Listen('position')
   onPosition(ev: CustomEvent) {
     const rect = ev.detail.rect;
@@ -39,7 +38,6 @@ export class TooltipComponent extends HTMLElement {
     this.style.height = `${this.$child.getBoundingClientRect().height}px`;
     this.style.visibility = 'visible';
   }
-
   get $child(): Element {
     return this.shadowRoot.querySelector('slot').assignedNodes()[0] as Element;
   }
