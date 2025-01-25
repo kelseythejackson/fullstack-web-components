@@ -3,6 +3,9 @@ import { DialogComponent } from './Dialog';
 import { ButtonComponent } from './../button/Button';
 import { ModalComponent } from './Modal';
 import { TooltipComponent } from './Tooltip';
+import { DialogStack } from './DialogStack';
+
+window.__dialogStack = new DialogStack();
 
 export default {
   title: 'Components/Dialog',

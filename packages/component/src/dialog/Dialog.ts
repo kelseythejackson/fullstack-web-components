@@ -1,4 +1,11 @@
 import { Component, attachShadow, css, query } from '@in/common';
+import { DialogStack } from './DialogStack';
+
+declare global {
+  interface Window {
+    __dialogStack: DialogStack;
+  }
+}
 
 @Component({
   selector: 'in-dialog',
@@ -29,9 +36,12 @@ export class DialogComponent extends HTMLElement {
   attributeChangedCallback(name, prev, next) {
     switch (name) {
       case 'target':
-        setTimeout(() => {
-          this.setTarget(next);
-        }, 0);
+        if (window.__dialogStack.findTemplateIndex(next) === -1) {
+          window.__dialogStack.registerTemplate(next);
+          setTimeout(() => {
+            this.setTarget(next);
+          }, 1);
+        }
         break;
       case 'template':
         this.$templateSelector = next;
@@ -40,6 +50,10 @@ export class DialogComponent extends HTMLElement {
         this.$variant = next;
         break;
     }
+  }
+
+  disconnectedCallback() {
+    window.__dialogStack.removeTemplate(this.$targetSelector);
   }
 
   setTarget(selector: string) {
@@ -79,7 +93,6 @@ export class DialogComponent extends HTMLElement {
     const clone = template.content.cloneNode(true) as HTMLElement;
     this.$container.classList.add(this.$variant);
     this.$container.appendChild(clone);
-    document.body.appendChild(this.$container);
     if (this.$variant === 'tooltip') {
       this.$container.dispatchEvent(
         new CustomEvent('position', {
@@ -90,5 +103,17 @@ export class DialogComponent extends HTMLElement {
       );
     }
     this.$state = 'open';
+    window.__dialogStack.pushDialog(this.$container);
+    const closeButton = this.$container.querySelector('.dialog-close-button');
+    if (closeButton) {
+      closeButton.addEventListener('click', (ev) => {
+        this.onClose();
+      });
+    }
+  }
+  onClose() {
+    window.__dialogStack.removeDialog(this.$container);
+    window.__dialogStack.removeTemplate(this.$targetSelector);
+    this.$state = 'close';
   }
 }
