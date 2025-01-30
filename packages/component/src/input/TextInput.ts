@@ -1,7 +1,25 @@
-import { IElementInternals } from 'types/lib.elementInternals';
-import { Validator, validate } from './validator';
-import { Component, attachShadow, html, css, Listen } from '@in/common';
+import {
+  IElementInternals,
+  ValidityStateFlags,
+} from 'types/lib.elementInternals';
+import { Component, attachShadow, Listen, html, css } from '@in/common';
+import { validate, Validator } from './validator';
 
+/**
+ * Renders an input element.
+ * @tag {string} in-textinput
+ * @attr {string} name - Name of the form control. Submitted with the form as part of a name/value pair
+ * @attr {string} type - Type of form control
+ * @attr {boolean} required -  A value is required or must be check for the form to be submittable
+ * @attr {string} minlength - Minimum length (number of characters) of value
+ * @attr {string} maxlength - Maximum length (number of characters) of value
+ * @attr {string} pattern - Pattern the value must match to be valid
+ * @attr {string} list - Value of the id attribute of the <datalist> of autocomplete options
+ * @attr {string} placeholder - Text that appears in the form control when it has no value set
+ * @attr {boolean} readonly - The value is not editable
+ * @attr {string} size - Size of the control
+ * @attr {string} spellcheck - Defines whether the element may be checked for spelling errors.
+ */
 @Component({
   selector: 'in-textinput',
   style: css`
@@ -34,8 +52,13 @@ import { Component, attachShadow, html, css, Listen } from '@in/common';
       box-shadow: none;
       color: var(--color-error);
     }
+    .message {
+      margin-top: var(--margin-xxs);
+      color: var(--color-error);
+      font-weight: var(--font-weight-default);
+    }
     input[disabled] {
-      opacity: var(--color-disable);
+      opacity: var(---color-disable);
       background: var(--color-disable);
       border: var(--border-disable);
     }
@@ -45,11 +68,6 @@ import { Component, attachShadow, html, css, Listen } from '@in/common';
       border: var(--border-disable);
       outline: none;
       box-shadow: none;
-    }
-    .message {
-      margin-top: var(--margin-xxs);
-      color: var(--color-error);
-      font-weight: var(--font-weight-default);
     }
   `,
   template: html` <div class="control">
@@ -64,30 +82,29 @@ import { Component, attachShadow, html, css, Listen } from '@in/common';
 })
 export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
-  public $validator: Validator;
   private internals: IElementInternals;
+  public attachInternals: () => IElementInternals;
+  public $validator: Validator;
   private $attr = {};
   constructor() {
     super();
     attachShadow(this);
     this.internals = this.attachInternals();
   }
-
-  static get observedAttributes() {
-    return [
-      'name',
-      'type',
-      'required',
-      'minlength',
-      'maxlength',
-      'pattern',
-      'list',
-      'placeholder',
-      'readonly',
-      'spellcheck',
-      'value',
-      'disabled',
-    ];
+  connectedCallback() {
+    for (let prop in this.$attr) {
+      this.$input.setAttribute(prop, this.$attr[prop]);
+    }
+    validate(this, false);
+  }
+  formDisabledCallback(disabled) {
+    this.disabled = disabled;
+  }
+  formStateRestoreCallback(state: string, mode: string) {
+    this.value = state;
+  }
+  formResetCallback(state: string) {
+    this.value = this.getAttribute('value') || '';
   }
   attributeChangedCallback(name, prev, next) {
     this.$attr[name] = next;
@@ -95,11 +112,11 @@ export class TextInputComponent extends HTMLElement {
       case 'value':
         this.value = next;
         break;
-      case 'required':
-        this.required = next;
-        break;
       case 'disabled':
         this.disabled = next;
+        break;
+      case 'required':
+        this.required = next;
         break;
       case 'type':
         this.$input.setAttribute('type', next);
@@ -121,30 +138,100 @@ export class TextInputComponent extends HTMLElement {
         break;
       case 'readonly':
         this.$input.setAttribute('readonly', next);
+        break;
       case 'spellcheck':
         this.$input.setAttribute('spellcheck', next);
         break;
     }
   }
-
-  connectedCallback() {
-    for (let prop in this.$attr) {
-      this.$input.setAttribute(prop, this.$attr[prop]);
+  static get observedAttributes() {
+    return [
+      'name',
+      'type',
+      'required',
+      'minlength',
+      'maxlength',
+      'pattern',
+      'list',
+      'placeholder',
+      'readonly',
+      'spellcheck',
+      'disabled',
+      'value',
+    ];
+  }
+  get $input(): HTMLInputElement {
+    return this.shadowRoot.querySelector('input');
+  }
+  get validity() {
+    return this.internals.validity;
+  }
+  get validationMessage() {
+    return this.internals.validationMessage;
+  }
+  get list() {
+    return this.$input.list;
+  }
+  get minLength() {
+    return this.$input.minLength;
+  }
+  set minLength(min: number) {
+    this.$input.minLength = min;
+  }
+  get maxLength() {
+    return this.$input.maxLength;
+  }
+  set maxLength(max: number) {
+    this.$input.maxLength = max;
+  }
+  get readOnly() {
+    return this.$input.readOnly;
+  }
+  get pattern() {
+    return this.$input.pattern;
+  }
+  set pattern(pattern: string) {
+    this.$input.pattern = pattern;
+  }
+  get placeholder() {
+    return this.$input.placeholder;
+  }
+  get spellcheck() {
+    return this.$input.spellcheck;
+  }
+  get type() {
+    return this.$input.type ?? 'text';
+  }
+  set type(type: string) {
+    this.$input.setAttribute('type', type);
+  }
+  get disabled() {
+    return this.$input.disabled;
+  }
+  set disabled(value: boolean | string) {
+    if (value === 'true' || value === true) {
+      this.$input.setAttribute('disabled', 'true');
     }
-
-    validate(this, false);
+    if (value === 'false' || value == false) {
+      this.$input.removeAttribute('disabled');
+    }
   }
-
-  formDisabledCallback(disabled) {
-    this.disabled = disabled;
+  get required(): boolean {
+    return this.$input.required;
   }
-
-  formStateRestoreCallback(state: string, mode: string) {
-    this.value = state;
+  set required(value: boolean | string) {
+    if (value === 'true' || value === true) {
+      this.$input.setAttribute('required', 'true');
+    }
+    if (value === 'false' || value === false) {
+      this.$input.removeAttribute('required');
+    }
   }
-
-  formResetCallback(state: string) {
-    this.value = this.getAttribute('value') || '';
+  get value(): string {
+    return this.$input.value;
+  }
+  set value(value: string) {
+    this.$input.value = value;
   }
   checkValidity() {
     return this.internals.checkValidity();
@@ -152,17 +239,16 @@ export class TextInputComponent extends HTMLElement {
   reportValidity() {
     return this.internals.reportValidity();
   }
+  setValidity(
+    flags: ValidityStateFlags,
+    message?: string,
+    anchor?: HTMLElement
+  ): void {
+    this.internals.setValidity(flags, message, anchor);
+  }
   @Listen('blur', 'input')
   onValidate() {
     validate(this, true);
-  }
-
-  focus() {
-    this.$input.focus();
-  }
-
-  blur() {
-    this.$input.blur();
   }
   @Listen('change', 'input')
   @Listen('keyup', 'input')
@@ -172,103 +258,10 @@ export class TextInputComponent extends HTMLElement {
     this.$input.removeAttribute('aria-invalid');
     this.internals.setFormValue(this.value, this.value);
   }
-
-  get type() {
-    return this.$input.type ?? 'text';
+  focus() {
+    this.$input.focus();
   }
-
-  set type(type: string) {
-    this.$input.setAttribute('type', type);
-  }
-
-  get list() {
-    return this.$input.list;
-  }
-
-  get minLength() {
-    return this.$input.minLength;
-  }
-
-  set minLength(min: number) {
-    this.$input.minLength = min;
-  }
-
-  get maxLength() {
-    return this.$input.maxLength;
-  }
-
-  set maxLength(max: number) {
-    this.$input.maxLength = max;
-  }
-
-  get readOnly() {
-    return this.$input.readOnly;
-  }
-
-  get pattern() {
-    return this.$input.pattern;
-  }
-
-  set pattern(pattern: string) {
-    this.$input.pattern = pattern;
-  }
-
-  get placeholder() {
-    return this.$input.placeholder;
-  }
-
-  get spellcheck() {
-    return this.$input.spellcheck;
-  }
-
-  set disabled(value: boolean | string) {
-    if (value === 'true' || value === true) {
-      this.$input.setAttribute('disabled', 'true');
-    }
-    if (value === 'false' || value === false) {
-      this.$input.removeAttribute('disabled');
-    }
-  }
-  get disabled() {
-    return this.$input.disabled;
-  }
-  get validity() {
-    return this.internals.validity;
-  }
-  get validationMessage() {
-    return this.internals.validationMessage;
-  }
-
-  get $input(): HTMLInputElement {
-    return this.shadowRoot.querySelector('input');
-  }
-
-  set value(value: string) {
-    this.$input.value = value;
-  }
-
-  get value(): string {
-    return this.$input.value;
-  }
-
-  set required(value: boolean | string) {
-    if (value === 'true' || value === true) {
-      this.$input.setAttribute('required', 'true');
-    }
-    if (value === 'false' || value == false) {
-      this.$input.removeAttribute('required');
-    }
-  }
-
-  get required(): boolean {
-    return this.$input.required;
-  }
-
-  setValidity(
-    flags: ValidityStateFlags,
-    message?: string,
-    anchor?: HTMLElement
-  ): void {
-    this.internals.setValidity(flags, message, anchor);
+  blur() {
+    this.$input.blur();
   }
 }
