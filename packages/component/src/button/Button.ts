@@ -92,6 +92,12 @@ const buttonStyles = css`
     box-shadow: none;
   }
 `;
+/**
+ * Renders a button
+ * @tag {string} in-button
+ * @attr {string} is - "in-button", Required
+ * @attr {string} class - Variant, can either be "primary" "secondary", or "icon"
+ */
 @Component({
   custom: { extends: 'button' },
   selector: 'in-button',
