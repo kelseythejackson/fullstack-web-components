@@ -624,97 +624,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/card/Card.stories.js",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ImageCard"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ImageCard",
-          "declaration": {
-            "name": "ImageCard",
-            "module": "src/card/Card.stories.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "module": "src/card/Card.stories.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/card/Card.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Autonomous custom element that renders a card container.\n`CardComponent` displays content in a header, content, footer layout.",
-          "name": "CardComponent",
-          "slots": [
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "displays header elements",
-              "name": "header"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "displays content in between header and footer",
-              "name": "content"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "displays footer elements",
-              "name": "footer"
-            }
-          ],
-          "superclass": {
-            "name": "HTMLElement"
-          },
-          "tagName": "in-card",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "CardComponent",
-          "declaration": {
-            "name": "CardComponent",
-            "module": "src/card/Card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/card/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "CardComponent",
-          "declaration": {
-            "name": "CardComponent",
-            "module": "./Card"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/button/Button.stories.js",
       "declarations": [
         {
@@ -830,6 +739,97 @@
           "declaration": {
             "name": "ButtonComponent",
             "module": "./Button"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/card/Card.stories.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ImageCard"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ImageCard",
+          "declaration": {
+            "name": "ImageCard",
+            "module": "src/card/Card.stories.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "module": "src/card/Card.stories.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/card/Card.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Autonomous custom element that renders a card container.\n`CardComponent` displays content in a header, content, footer layout.",
+          "name": "CardComponent",
+          "slots": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "displays header elements",
+              "name": "header"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "displays content in between header and footer",
+              "name": "content"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "displays footer elements",
+              "name": "footer"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "in-card",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CardComponent",
+          "declaration": {
+            "name": "CardComponent",
+            "module": "src/card/Card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/card/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CardComponent",
+          "declaration": {
+            "name": "CardComponent",
+            "module": "./Card"
           }
         }
       ]
@@ -2299,561 +2299,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/types/src/card/Card.d.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Autonomous custom element that renders a card container.\n`CardComponent` displays content in a header, content, footer layout.",
-          "name": "CardComponent",
-          "slots": [
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "displays header elements",
-              "name": "header"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "displays content in between header and footer",
-              "name": "content"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "displays footer elements",
-              "name": "footer"
-            }
-          ],
-          "superclass": {
-            "name": "HTMLElement"
-          },
-          "tagName": "in-card",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "CardComponent",
-          "declaration": {
-            "name": "CardComponent",
-            "module": "dist/types/src/card/Card.d.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/types/src/card/index.d.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "CardComponent",
-          "declaration": {
-            "name": "CardComponent",
-            "module": "./Card"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/types/src/dialog/Dialog.d.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Controller for rendering a dialog from HTML template.\n\n`DialogComponent` requires an instance of `DialogStack` to be set on `window.__dialogStack` prior to instantiation. After specifying a `template`, `target`, and `variant` with HTML attributes, `DialogComponent` will display either a modal or tooltip that renders a HTML template.",
-          "name": "DialogComponent",
-          "members": [
-            {
-              "kind": "field",
-              "name": "$container",
-              "type": {
-                "text": "Element"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "$state",
-              "type": {
-                "text": "'open' | 'close'"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "$target",
-              "type": {
-                "text": "Element"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "$targetSelector",
-              "type": {
-                "text": "string"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "$templateSelector",
-              "type": {
-                "text": "string"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "$variant",
-              "type": {
-                "text": "'modal' | 'tooltip'"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onOpen",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "ev",
-                  "type": {
-                    "text": "MouseEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onClose",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "setTarget",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "selector",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "targetListener",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "ev",
-                  "type": {
-                    "text": "MouseEvent"
-                  }
-                }
-              ]
-            }
-          ],
-          "attributes": [
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "Required, Selector that targets the HTML template, for use with `querySelector`.",
-              "name": "template"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "Selector that targets the HTMLelement that triggers the dialog on click, for use with `querySelector`, Required",
-              "name": "target"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "Specifies whether to display a \"modal\" or \"tooltip\", Required",
-              "name": "variant"
-            }
-          ],
-          "superclass": {
-            "name": "HTMLElement"
-          },
-          "tagName": "in-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "DialogComponent",
-          "declaration": {
-            "name": "DialogComponent",
-            "module": "dist/types/src/dialog/Dialog.d.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/types/src/dialog/DialogStack.d.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "DialogStack",
-          "members": [
-            {
-              "kind": "field",
-              "name": "stack",
-              "type": {
-                "text": "Element[]"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "last",
-              "type": {
-                "text": "Element"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "focused",
-              "type": {
-                "text": "Element"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "templateId",
-              "type": {
-                "text": "string[]"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "registerTemplate",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "id",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "removeTemplate",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "id",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "findDialogIndex",
-              "return": {
-                "type": {
-                  "text": "number"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "Element"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "findTemplateIndex",
-              "return": {
-                "type": {
-                  "text": "number"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "id",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "focusDialog",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "Element"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "focusedDialog",
-              "return": {
-                "type": {
-                  "text": "Element"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "pushDialog",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "Element"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "popDialog",
-              "return": {
-                "type": {
-                  "text": "Element"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "removeDialog",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "Element"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "setZIndices",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "addListeners",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onFocus",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "ev",
-                  "type": {
-                    "text": "MouseEvent"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "DialogStack",
-          "declaration": {
-            "name": "DialogStack",
-            "module": "dist/types/src/dialog/DialogStack.d.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/types/src/dialog/Modal.d.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ModalComponent",
-          "superclass": {
-            "name": "HTMLElement"
-          },
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ModalComponent",
-          "declaration": {
-            "name": "ModalComponent",
-            "module": "dist/types/src/dialog/Modal.d.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/types/src/dialog/Tooltip.d.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TooltipComponent",
-          "members": [
-            {
-              "kind": "method",
-              "name": "onPosition",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "ev",
-                  "type": {
-                    "text": "CustomEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "$child",
-              "type": {
-                "text": "Element"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "HTMLElement"
-          },
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TooltipComponent",
-          "declaration": {
-            "name": "TooltipComponent",
-            "module": "dist/types/src/dialog/Tooltip.d.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/types/src/dialog/index.d.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "DialogStack",
-          "declaration": {
-            "name": "DialogStack",
-            "module": "./DialogStack"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "DialogComponent",
-          "declaration": {
-            "name": "DialogComponent",
-            "module": "./Dialog"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ModalComponent",
-          "declaration": {
-            "name": "ModalComponent",
-            "module": "./Modal"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "TooltipComponent",
-          "declaration": {
-            "name": "TooltipComponent",
-            "module": "./Tooltip"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "dist/types/src/input/TextInput.d.ts",
       "declarations": [
         {
@@ -3297,6 +2742,70 @@
           "declaration": {
             "name": "validate",
             "module": "dist/types/src/input/validator.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/types/src/card/Card.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Autonomous custom element that renders a card container.\n`CardComponent` displays content in a header, content, footer layout.",
+          "name": "CardComponent",
+          "slots": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "displays header elements",
+              "name": "header"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "displays content in between header and footer",
+              "name": "content"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "displays footer elements",
+              "name": "footer"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "in-card",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CardComponent",
+          "declaration": {
+            "name": "CardComponent",
+            "module": "dist/types/src/card/Card.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/types/src/card/index.d.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CardComponent",
+          "declaration": {
+            "name": "CardComponent",
+            "module": "./Card"
           }
         }
       ]
@@ -3890,6 +3399,497 @@
           "declaration": {
             "name": "TrComponent",
             "module": "./Tr"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/types/src/dialog/Dialog.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Controller for rendering a dialog from HTML template.\n\n`DialogComponent` requires an instance of `DialogStack` to be set on `window.__dialogStack` prior to instantiation. After specifying a `template`, `target`, and `variant` with HTML attributes, `DialogComponent` will display either a modal or tooltip that renders a HTML template.",
+          "name": "DialogComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "$container",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "$state",
+              "type": {
+                "text": "'open' | 'close'"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "$target",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "$targetSelector",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "$templateSelector",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "$variant",
+              "type": {
+                "text": "'modal' | 'tooltip'"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onOpen",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onClose",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setTarget",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "selector",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "targetListener",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Required, Selector that targets the HTML template, for use with `querySelector`.",
+              "name": "template"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Selector that targets the HTMLelement that triggers the dialog on click, for use with `querySelector`, Required",
+              "name": "target"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Specifies whether to display a \"modal\" or \"tooltip\", Required",
+              "name": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "in-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DialogComponent",
+          "declaration": {
+            "name": "DialogComponent",
+            "module": "dist/types/src/dialog/Dialog.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/types/src/dialog/DialogStack.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DialogStack",
+          "members": [
+            {
+              "kind": "field",
+              "name": "stack",
+              "type": {
+                "text": "Element[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "last",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "focused",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "templateId",
+              "type": {
+                "text": "string[]"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "registerTemplate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "removeTemplate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "findDialogIndex",
+              "return": {
+                "type": {
+                  "text": "number"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "Element"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "findTemplateIndex",
+              "return": {
+                "type": {
+                  "text": "number"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "focusDialog",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "Element"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "focusedDialog",
+              "return": {
+                "type": {
+                  "text": "Element"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "pushDialog",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "Element"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "popDialog",
+              "return": {
+                "type": {
+                  "text": "Element"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeDialog",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "Element"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "setZIndices",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "addListeners",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onFocus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DialogStack",
+          "declaration": {
+            "name": "DialogStack",
+            "module": "dist/types/src/dialog/DialogStack.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/types/src/dialog/Modal.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ModalComponent",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ModalComponent",
+          "declaration": {
+            "name": "ModalComponent",
+            "module": "dist/types/src/dialog/Modal.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/types/src/dialog/Tooltip.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TooltipComponent",
+          "members": [
+            {
+              "kind": "method",
+              "name": "onPosition",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "ev",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "$child",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TooltipComponent",
+          "declaration": {
+            "name": "TooltipComponent",
+            "module": "dist/types/src/dialog/Tooltip.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/types/src/dialog/index.d.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DialogStack",
+          "declaration": {
+            "name": "DialogStack",
+            "module": "./DialogStack"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "DialogComponent",
+          "declaration": {
+            "name": "DialogComponent",
+            "module": "./Dialog"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ModalComponent",
+          "declaration": {
+            "name": "ModalComponent",
+            "module": "./Modal"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "TooltipComponent",
+          "declaration": {
+            "name": "TooltipComponent",
+            "module": "./Tooltip"
           }
         }
       ]
