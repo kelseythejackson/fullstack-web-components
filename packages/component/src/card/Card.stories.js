@@ -1,4 +1,4 @@
-import { CardComponent } from './Card';
+import { CardComponent } from './Card.ts';
 
 const PrimaryTemplate = ({ image, headline, content, link }) => `
 <in-card style="max-width: 320px;">
@@ -18,6 +18,7 @@ ImageCard.args = {
   link: 'Read',
 };
 export default {
+  component: 'in-card',
   title: 'Components/Card',
   argTypes: {
     image: {

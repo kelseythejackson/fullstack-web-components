@@ -1,8 +1,10 @@
 import { html } from 'lit-html';
-import { DialogComponent } from './Dialog';
-import { ModalComponent } from './Modal';
-import { TooltipComponent } from './Tooltip';
-import { DialogStack } from './DialogStack';
+import {
+  DialogComponent,
+  ModalComponent,
+  TooltipComponent,
+  DialogStack,
+} from './index.ts';
 
 window.__dialogStack = new DialogStack();
 
