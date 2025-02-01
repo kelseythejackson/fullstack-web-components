@@ -40,6 +40,7 @@ export type ColumnData = Column[];
       vertical-align: middle;
       font-weight: var(--font-weight-default);
     }
+
     [is='in-table'] tr {
       height: 58px;
       vertical-align: middle;
