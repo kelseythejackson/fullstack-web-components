@@ -10,5 +10,7 @@ jobs:
         with:
           node-version: "16"
           cache: "yarn"
+      - run: yarn cache clean
+      - run: yarn --update-checksums
       - run: yarn install
       - run: yarn build
