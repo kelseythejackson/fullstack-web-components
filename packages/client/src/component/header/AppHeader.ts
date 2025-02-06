@@ -1,4 +1,7 @@
-import { attachShadow, html, css, Component } from '@in/common';
+import { attachShadow, html, css, Component, Listen } from '@in/common';
+import { SESSION, SessionService } from './../../service/session';
+
+const sessionService = new SessionService();
 
 const styles = css`
   :host {
@@ -68,6 +71,20 @@ export class AppHeader extends HTMLElement {
   constructor() {
     super();
     attachShadow(this);
+  }
+  connectedCallback() {
+    if (!window.location.pathname.includes('login')) {
+      sessionService.getSession().then((status) => {
+        if (status.session === SESSION.CLOSED) {
+          this.$login.removeAttribute('hidden');
+        }
+      });
+    }
+  }
+
+  @Listen('click', '.icon')
+  onLogoClick() {
+    document.location.href = '/';
   }
   get $login(): Element {
     return this.shadowRoot.querySelector('.login-link') as Element;
