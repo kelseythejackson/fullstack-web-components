@@ -14,7 +14,7 @@ const styles = css`
 const shadowTemplate = html`
   <app-header></app-header>
   <div id="content-root">Content</div>
-  <footer>Footer</footer>
+  <cookie-footer></cookie-footer>
 `;
 
 @Component({
