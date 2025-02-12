@@ -1,4 +1,4 @@
-import { attachShadow, html, css, Component } from '@in/common';
+import { attachShadow, html, css, Component, Listen } from '@in/common';
 
 const styles = css`
   :host {
@@ -45,5 +45,17 @@ export class CookieFooter extends HTMLElement {
   constructor() {
     super();
     attachShadow(this);
+  }
+
+  updateCookiePermission(allow: boolean) {}
+
+  @Listen('click', '.secondary')
+  onDenyClick() {
+    this.updateCookiePermission(false);
+  }
+
+  @Listen('click', '.primary')
+  onAllowClick() {
+    this.updateCookiePermission(true);
   }
 }
