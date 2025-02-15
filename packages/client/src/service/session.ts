@@ -10,14 +10,12 @@ export type SessionResponse = {
 export class SessionService {
   private path = '/api/session';
   constructor() {}
-
   getSession(): Promise<SessionResponse> {
     return fetch(this.path, {
       method: 'GET',
     }).then((res) => this.processSession(res.status));
   }
-
-  processSession(status: number) {
+  processSession(status: number): SessionResponse {
     return {
       session: status === 200 ? SESSION.OPEN : SESSION.CLOSED,
     };

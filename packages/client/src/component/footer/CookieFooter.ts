@@ -1,6 +1,9 @@
 import { attachShadow, html, css, Component, Listen } from '@in/common';
+import { COOKIES, CookieService } from './../../service/cookies';
 
-const styles = css`
+const cookieService = new CookieService();
+
+export const styles = css`
   :host {
     display: flex;
     justify-content: space-between;
@@ -25,14 +28,15 @@ const styles = css`
     }
   }
 `;
-const shadowTemplate = html`
+
+export const shadowTemplate = html`
   <p class="message">
     We use cookies to personalize content and ads, to provide social media
     features and to analyze our traffic.
   </p>
   <div class="button-container">
     <button is="in-button" class="in-button secondary">Deny</button>
-    <button is="in-button" class="in button primary">Allow</button>
+    <button is="in-button" class="in-button primary">Allow</button>
   </div>
 `;
 
@@ -46,16 +50,25 @@ export class CookieFooter extends HTMLElement {
     super();
     attachShadow(this);
   }
-
-  updateCookiePermission(allow: boolean) {}
-
+  updateCookiePermission(allow: COOKIES.ACCEPT | COOKIES.DECLINE) {
+    cookieService
+      .givePermission({
+        permission: allow,
+      })
+      .then((cookies) => {
+        if (cookies.permission === COOKIES.ACCEPT) {
+          this.setAttribute('hidden', 'true');
+        } else {
+          this.removeAttribute('hidden');
+        }
+      });
+  }
   @Listen('click', '.secondary')
   onDenyClick() {
-    this.updateCookiePermission(false);
+    this.updateCookiePermission(COOKIES.DECLINE);
   }
-
   @Listen('click', '.primary')
   onAllowClick() {
-    this.updateCookiePermission(true);
+    this.updateCookiePermission(COOKIES.ACCEPT);
   }
 }

@@ -1,11 +1,11 @@
-type InternalCookiePermission = {
-  permission: boolean;
-};
-
 export enum COOKIES {
   ACCEPT,
   DECLINE,
 }
+
+type InternalCookiePermission = {
+  permission: boolean;
+};
 
 export type CookiePermission = {
   permission: COOKIES.ACCEPT | COOKIES.DECLINE;
@@ -29,7 +29,6 @@ export class CookieService {
       })
       .then((res: InternalCookiePermission) => this.processPermission(res));
   }
-
   givePermission(cookies: CookiePermission): Promise<CookiePermission> {
     const allow = cookies.permission === COOKIES.ACCEPT ? true : false;
     return fetch('/api/cookies', {
@@ -52,7 +51,7 @@ export class CookieService {
   }
   processPermission(model: InternalCookiePermission): CookiePermission {
     return {
-      permission: model.permission === true ? COOKIES.ACCEPT : COOKIES.DECLINE,
+      permission: model.permission ? COOKIES.ACCEPT : COOKIES.DECLINE,
     };
   }
 }
