@@ -1,5 +1,7 @@
 import { attachShadow, html, css, Component } from '@in/common';
+import { COOKIES, CookieService } from './../../service/cookies';
 
+const cookieService = new CookieService();
 const styles = css`
   :host {
     display: flex;
@@ -26,5 +28,19 @@ export class MainView extends HTMLElement {
   constructor() {
     super();
     attachShadow(this);
+  }
+
+  connectedCallback() {
+    cookieService.getPermission().then((cookies) => {
+      if (cookies.permission === COOKIES.ACCEPT) {
+        this.$cookieFooter.setAttribute('hidden', 'true');
+      } else {
+        this.$cookieFooter.removeAttribute('hidden');
+      }
+    });
+  }
+
+  get $cookieFooter() {
+    return this.shadowRoot.querySelector('cookie-footer');
   }
 }
