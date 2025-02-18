@@ -11,6 +11,44 @@ const styles = css`
   }
   #content-root {
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+  }
+  a:link,
+  a:visited {
+    font-family: var(--font-default);
+    font-weight: var(--font-weight-default);
+    font-size: var(--font-body-md);
+    text-decoration: none;
+    color: var(--color-black);
+  }
+  .cta:after {
+    display: inline-block;
+    margin-left: 4px;
+    content: '\\25BA';
+  }
+  .section {
+    padding: var(--margin-lg);
+  }
+  .blurb {
+    text-align: justify;
+  }
+  .half {
+    width: 50%;
+  }
+  .right {
+    float: right;
+  }
+  @media (max-width: 480px) {
+    .half {
+      width: 100%;
+    }
+    .third {
+      width: 100%;
+    }
+    .right {
+      float: left;
+    }
   }
 `;
 const shadowTemplate = html`
@@ -23,7 +61,7 @@ const shadowTemplate = html`
           Lorem ipsum odor amet, consectetuer adipiscing elit. Orci dis sit
           himenaeos nullam senectus felis mauris feugiat.
         </p>
-        <a href="/dashboard" class="cta dashboard-link">View Contacts</a>
+        <a href="/dashboard" class="cta dashboard-link" hidden>View Contacts</a>
       </div>
     </div>
     <div class="section">
