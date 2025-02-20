@@ -39,6 +39,16 @@ const styles = css`
   .right {
     float: right;
   }
+  [is='in-bg'] {
+    width: calc(100% - (var(--margin-lg) * 2));
+    min-height: 480px;
+  }
+  .section:last-child {
+    padding-bottom: 120px;
+  }
+  .light {
+    color: var(--color-white);
+  }
   @media (max-width: 480px) {
     .half {
       width: 100%;
@@ -54,7 +64,11 @@ const styles = css`
 const shadowTemplate = html`
   <app-header></app-header>
   <div id="content-root">
-    <div class="section">
+    <div
+      is="in-bg"
+      class="section"
+      background="/style/asset/timon-studler-BIk2ANMmNz4-unsplash.jpg"
+    >
       <div class="blurb half right">
         <h2>Your Last Contact List</h2>
         <p>
@@ -64,7 +78,11 @@ const shadowTemplate = html`
         <a href="/dashboard" class="cta dashboard-link" hidden>View Contacts</a>
       </div>
     </div>
-    <div class="section">
+    <div
+      is="in-bg"
+      class="section light"
+      background="/style/asset/valiant-made-zBkVp3E2CnE-unsplash.jpg"
+    >
       <div class="blurb">
         <h2>Turn Group Chats Into Live Events</h2>
         <p>
