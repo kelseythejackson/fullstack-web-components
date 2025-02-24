@@ -32,4 +32,15 @@ export class Router {
   matchRoute(path: string): Route | undefined {
     return this.routes.find((route) => route.path === path);
   }
+
+  resolve(route: Route) {
+    const component: HTMLElement = document.createElement(route.tag);
+
+    if (route.title) {
+      document.title = route.title;
+    }
+
+    this.rootElement.innerHTML = '';
+    this.rootElement.appendChild(component);
+  }
 }
