@@ -2,9 +2,17 @@ import { attachShadow, css, html, Component } from '@in/common';
 
 const styles = css``;
 const shadowTemplate = html`
-  <h1>Login</h1>
-  <a href="/">Landing Page</a>
-  <a href="/dashboard">Dashboard</a>
+  <app-header></app-header>
+  <div id="content-root">
+    <in-card style="max-width: 320px">
+      <h4 slot="header">Login</h4>
+      <form name="foo" slot="content">
+        <fieldset>
+          <legend>Login Form</legend>
+        </fieldset>
+      </form>
+    </in-card>
+  </div>
 `;
 
 @Component({
