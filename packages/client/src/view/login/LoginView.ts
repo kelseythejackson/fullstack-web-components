@@ -14,6 +14,38 @@ const styles = css`
     transform: translateX(-50%) translateY(-50%);
     min-width: 320px;
   }
+  h4 {
+    font-family: var(--font-default);
+    font-weight: var(--font-weight-default);
+    font-size: var(--font-headline-line-height-sm);
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-top: var(--margin-lg);
+    margin-bottom: var(--margin-lg);
+  }
+  fieldset {
+    border: 0 none;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-block-start: 0em;
+    padding-inline-start: 0em;
+    padding-inline-end: 0em;
+    padding-block-end: 0em;
+  }
+  legend {
+    visibility: hidden;
+    height: 0px;
+  }
+  label {
+    display: block;
+    font-family: var(--font-default);
+    font-size: var(--font-body-sm);
+    margin-top: var(--margin-sm);
+    margin-bottom: var(--margin-sm);
+  }
+  button {
+    margin-top: var(--margin-md);
+  }
 `;
 const shadowTemplate = html`
   <app-header></app-header>
