@@ -1,4 +1,4 @@
-import { attachShadow, css, html, Component } from '@in/common';
+import { attachShadow, css, html, Component, Listen } from '@in/common';
 
 const styles = css`
   :host {
@@ -88,8 +88,57 @@ const shadowTemplate = html`
   template: shadowTemplate,
 })
 export class LoginView extends HTMLElement {
+  validators = {
+    username: {
+      validations: [
+        {
+          flag: { valueMissing: true },
+          message: 'Error: Required, please enter a username.',
+          condition: (input) => input.required && input.value.length <= 0,
+        },
+        {
+          flag: { tooShort: true },
+          message:
+            'Error: Minimum length not met, please supply a value with at least 8 characters.',
+          condition: (input) =>
+            input.minLength && input.value.length < input.minLength,
+        },
+      ],
+    },
+    password: {
+      validations: [
+        {
+          flag: { valueMissing: true },
+          message: 'Error: Required, please enter a password.',
+          condition: (input) => input.required && input.value.length <= 0,
+        },
+        {
+          flag: { tooShort: true },
+          message:
+            'Error: Minimum length not met, please supply a value with at least 5 characters.',
+          condition: (input) =>
+            input.minLength && input.value.length < input.minLength,
+        },
+        {
+          flag: { patternMismatch: true },
+          message:
+            'Please use at least one uppercase, lowercase letter, special character, and number.',
+          condition: (input) =>
+            input.pattern &&
+            input.value.match(new RegExp(input.pattern)) === null,
+        },
+      ],
+    },
+  };
   constructor() {
     super();
     attachShadow(this);
+  }
+
+  connectedCallback() {
+    for (let prop in this.validators) {
+      (this.shadowRoot.querySelector(`[name="${prop}"]`) as any).$validator =
+        this.validators[prop];
+    }
   }
 }
