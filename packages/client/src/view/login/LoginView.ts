@@ -141,4 +141,36 @@ export class LoginView extends HTMLElement {
         this.validators[prop];
     }
   }
+
+  @Listen('click', '.form-button')
+  onButtonClick(ev) {
+    ev.preventDefault();
+    this.onValidate(ev);
+  }
+
+  @Listen('validate')
+  onValidate(ev: Event): void {
+    const validations = [];
+    for (let prop in this.validators) {
+      validations.push(
+        (this.shadowRoot.querySelector(`[name="#${prop}"]`) as any).validity
+          ?.valid
+      );
+    }
+    if (validations.filter((val) => val === false).length) {
+      console.warn('INVALID');
+    } else {
+      console.log('VALID');
+      this.onSubmit();
+    }
+  }
+  @Listen('submit')
+  onSubmit(): void {
+    const request = {};
+    Array.from(this.shadowRoot.querySelectorAll('.form-control')).forEach(
+      (control: any) => {
+        request[control.id] = control.value;
+      }
+    );
+  }
 }
