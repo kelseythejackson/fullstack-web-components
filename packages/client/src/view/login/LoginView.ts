@@ -1,4 +1,7 @@
 import { attachShadow, css, html, Component, Listen } from '@in/common';
+import { LoginRequest, LoginService } from '../../service/login';
+
+const loginService = new LoginService();
 
 const styles = css`
   :host {
@@ -166,11 +169,15 @@ export class LoginView extends HTMLElement {
   }
   @Listen('submit')
   onSubmit(): void {
-    const request = {};
+    const request: LoginRequest = {
+      username: '',
+      password: '',
+    };
     Array.from(this.shadowRoot.querySelectorAll('.form-control')).forEach(
       (control: any) => {
         request[control.id] = control.value;
       }
     );
+    loginService.login(request).then((res) => {});
   }
 }
