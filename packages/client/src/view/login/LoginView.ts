@@ -1,7 +1,10 @@
 import { attachShadow, css, html, Component, Listen } from '@in/common';
 import { LoginRequest, LoginService } from '../../service/login';
+import { SESSION } from '../../service/session';
+import { LocationService } from '../../service/location';
 
 const loginService = new LoginService();
+const locationService = new LocationService();
 
 const styles = css`
   :host {
@@ -178,6 +181,10 @@ export class LoginView extends HTMLElement {
         request[control.id] = control.value;
       }
     );
-    loginService.login(request).then((res) => {});
+    loginService.login(request).then((res) => {
+      if (res.session === SESSION.OPEN) {
+        locationService.navigate('dashboard');
+      }
+    });
   }
 }
