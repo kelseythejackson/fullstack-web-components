@@ -1,4 +1,7 @@
 import { attachShadow, css, html, Component } from '@in/common';
+import { ContactService } from '../../service/contacts';
+
+const contactService = new ContactService('dashboard-channel');
 
 const styles = css`
   #content-root {
@@ -35,8 +38,23 @@ const shadowTemplate = html`
   template: shadowTemplate,
 })
 export class DashboardView extends HTMLElement {
+  channelName: string = 'dashboard-channel';
   constructor() {
     super();
     attachShadow(this);
+    contactService.getContacts().then((model) => {
+      if (model.columnData.length && model.rowData.length) {
+        this.onTableData();
+      }
+    });
+  }
+
+  onTableData() {
+    const channel = new BroadcastChannel(this.channelName);
+    channel.onmessage = (ev) => {
+      if (ev.data.type === 'change') {
+        contactService.modifyContacts(ev.data.detail);
+      }
+    };
   }
 }
