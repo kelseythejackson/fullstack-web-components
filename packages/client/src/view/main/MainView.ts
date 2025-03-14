@@ -1,7 +1,9 @@
 import { attachShadow, html, css, Component } from '@in/common';
 import { COOKIES, CookieService } from './../../service/cookies';
+import { SESSION, SessionService } from './../../service/session';
 
 const cookieService = new CookieService();
+const sessionService = new SessionService();
 const styles = css`
   :host {
     display: flex;
@@ -112,6 +114,11 @@ export class MainView extends HTMLElement {
   }
 
   connectedCallback() {
+    sessionService.getSession().then((status) => {
+      if (status.session === SESSION.OPEN) {
+        this.$dashboardLink.removeAttribute('hidden');
+      }
+    });
     cookieService.getPermission().then((cookies) => {
       if (cookies.permission === COOKIES.ACCEPT) {
         this.$cookieFooter.setAttribute('hidden', 'true');
@@ -123,5 +130,8 @@ export class MainView extends HTMLElement {
 
   get $cookieFooter() {
     return this.shadowRoot.querySelector('cookie-footer');
+  }
+  get $dashboardLink() {
+    return this.shadowRoot.querySelector('.dashboard-link');
   }
 }
