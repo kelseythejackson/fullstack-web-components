@@ -1,5 +1,7 @@
 import { attachShadow, html, css, Component, Listen } from '@in/common';
 import { COOKIES, CookieService } from './../../service/cookies';
+import { buttonStyles } from '@in/ui/dist/types/src/button';
+import { resolve } from 'es6-template-strings';
 
 const cookieService = new CookieService();
 
@@ -72,3 +74,15 @@ export class CookieFooter extends HTMLElement {
     this.updateCookiePermission(COOKIES.ACCEPT);
   }
 }
+
+export const template = () => `
+  <cookie-footer>
+    <template shadowroot="open">
+      <style>
+        ${resolve(styles)}
+        ${resolve(buttonStyles)}
+      </style>
+      ${resolve(shadowTemplate)}
+    </template>
+  </cookie-footer>
+`;
