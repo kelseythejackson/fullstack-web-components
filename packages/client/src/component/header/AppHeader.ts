@@ -1,6 +1,8 @@
 import { attachShadow, html, css, Component, Listen } from '@in/common';
 import { SESSION, SessionService } from './../../service/session';
 import { LocationService } from '../../service/location';
+import { buttonStyles } from '@in/ui/dist/types/src/button';
+import { resolve } from 'es6-template-strings';
 
 const locationService = new LocationService();
 const sessionService = new SessionService();
@@ -92,3 +94,15 @@ export class AppHeader extends HTMLElement {
     return this.shadowRoot.querySelector('.login-link') as Element;
   }
 }
+
+export const template = () => `
+  <app-header>
+    <template shadowroot="open">
+      <style>
+        ${resolve(styles)}
+        ${resolve(buttonStyles)}
+      </style>
+      ${resolve(shadowTemplate)}
+    </template>
+  </app-header>
+`;
